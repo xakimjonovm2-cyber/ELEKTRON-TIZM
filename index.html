@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHXNO PARK ELEKTRON TIZMI</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+body { background: #0f172a; color: #f8fafc; padding: 20px; }
+.topbar { max-width: 1120px; margin: 0 auto 20px auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; background: #1e293b; padding: 16px 22px; border-radius: 14px; border: 1px solid #334155; }
+.topbar h1 { font-size: 19px; color: #38bdf8; }
+.top-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.tg-btn { background: #0284c7; color: #fff; border: none; padding: 10px 14px; border-radius: 9px; font-weight: bold; cursor: pointer; font-size: 13px; }
+.sms-btn { background: #7c3aed; color: #fff; border: none; padding: 10px 14px; border-radius: 9px; font-weight: bold; cursor: pointer; font-size: 13px; }
+.stats { max-width: 1120px; margin: 0 auto 20px auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+@media (max-width: 768px) { .stats { grid-template-columns: 1fr; } }
+.stat { background: #1e293b; padding: 16px; border-radius: 12px; border: 1px solid #334155; }
+.stat span { font-size: 12px; color: #94a3b8; }
+.stat h2 { font-size: 21px; margin-top: 5px; color: #38bdf8; }
+.grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; }
+@media (max-width: 850px) { .grid { grid-template-columns: 1fr; } }
+.box, .full { background: #1e293b; padding: 20px; border-radius: 14px; border: 1px solid #334155; }
+.full { max-width: 1120px; margin: 20px auto 0 auto; }
+h3 { font-size: 16px; color: #38bdf8; margin-bottom: 14px; border-bottom: 1px solid #334155; padding-bottom: 7px; }
+.r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+input, select { width: 100%; padding: 9px 11px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; margin-bottom: 10px; }
+.hero { background: linear-gradient(135deg, #0284c7, #2563eb); padding: 18px; border-radius: 12px; text-align: center; margin-bottom: 14px; }
+.hero strong { display: block; font-size: 26px; margin-top: 4px; }
+.sum { background: #0f172a; padding: 12px; border-radius: 10px; margin-bottom: 14px; border: 1px solid #334155; }
+.sline { display: flex; justify-content: space-between; margin-bottom: 7px; font-size: 14px; }
+.stot { border-top: 1px dashed #475569; padding-top: 7px; font-size: 16px; font-weight: bold; color: #34d399; }
+.btn { width: 100%; padding: 12px; border: none; border-radius: 9px; font-weight: bold; font-size: 14px; cursor: pointer; color: #fff; margin-bottom: 8px; }
+.bgreen { background: #10b981; }
+.bblue { background: #2563eb; }
+.search { background: #0f172a; border: 2px solid #38bdf8; padding: 12px; font-size: 15px; margin-bottom: 14px; }
+.citem { background: #0f172a; border: 1px solid #334155; border-radius: 11px; padding: 14px; margin-bottom: 12px; }
+.chead { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 8px; }
+.cact { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.cact input { width: 170px; margin: 0; background: #1e293b; }
+.bsm { width: auto; padding: 8px 14px; margin: 0; font-size: 13px; }
+.hist { background: #1e293b; padding: 7px 10px; border-radius: 7px; font-size: 12px; color: #94a3b8; margin-top: 8px; }
+.modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 50; }
+.modal.open { display: flex; }
+.mbox { background: #1e293b; padding: 22px; border-radius: 14px; width: 90%; max-width: 420px; border: 1px solid #38bdf8; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><h1> TEXNO PARK Muddatli To'lov</h1></div>
+
+</div>
+
+<div class="stats">
+  <div class="stat"><span>Faol mijozlar</span><h2 id="stCount">0 ta</h2></div>
+  <div class="stat"><span>Jami qolgan qarzlar</span><h2 id="stDebt" style="color:#f87171;">0 so'm</h2></div>
+  <div class="stat"><span>Undirilgan summa</span><h2 id="stPaid" style="color:#34d399;">0 so'm</h2></div>
+</div>
+
+<div class="grid">
+  <div class="box">
+    <h3>1. Yangi Mijozni Ro'yxatga Olish</h3>
+    <div class="r2">
+      <div><label>Mijoz F.I.Sh:</label><input id="ism" placeholder="Xakimjonov Muhammadjon"></div>
+      <div><label>Telefon raqami (SMS uchun):</label><input id="tel" placeholder="998901234567"></div>
+    </div>
+    <div class="r2">
+      <div><label>Yashash manzili:</label><input id="manzil" placeholder="Guliston sh., Nihol MFY"></div>
+      <div><label>Pasport seriya/raqami:</label><input id="pasport" placeholder="AE 4560895"></div>
+    </div>
+    <div class="r2">
+      <div><label>Mahsulot nomi:</label><input id="tovar" placeholder="Hofman Kir yuvish mashinasi"></div>
+      <div><label>Mijoz Telegram ID (ixtiyoriy):</label><input id="mijozTg" placeholder="123456789"></div>
+    </div>
+    <div class="r2">
+      <div><label>Asl narxi (so'm):</label><input type="number" id="narx" value="5000000" oninput="hisobla()"></div>
+      <div><label>Boshlang'ich to'lov (so'm):</label><input type="number" id="bosh" value="1000000" oninput="hisobla()"></div>
+    </div>
+    <div class="r2">
+      <div><label>Muddat (oy):</label>
+        <select id="oy" onchange="hisobla()">
+          <option value="3">3 oy</option>
+          <option value="6">6 oy</option>
+          <option value="9">9 oy</option>
+          <option value="12" selected>12 oy</option>
+          <option value="18">18 oy</option>
+          <option value="24">24 oy</option>
+        </select>
+      </div>
+      <div><label>Yillik ustama (%):</label><input type="number" id="foiz" value="24" oninput="hisobla()"></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <h3>2. Avtomatik Hisob-kitob</h3>
+    <div class="hero"><span>Har oylik to'lov:</span><strong id="oylik_txt">0 so'm</strong></div>
+    <div class="sum">
+      <div class="sline"><span>Mahsulot narxi:</span><b id="narx_txt">0 so'm</b></div>
+      <div class="sline"><span>Boshlang'ich to'lov:</span><b id="bosh_txt">0 so'm</b></div>
+      <div class="sline"><span>Asosiy qarz:</span><b id="qarz_txt">0 so'm</b></div>
+      <div class="sline"><span>Ustama summasi:</span><b id="ustama_txt">0 so'm</b></div>
+      <div class="sline stot"><span>Jami summa:</span><b id="jami_txt">0 so'm</b></div>
+    </div>
+    <button class="btn bgreen" onclick="saqlash()">Saqlash Telegram va SMS Yuborish</button>
+    <button class="btn bblue" onclick="wordYukla()"> Shartnoma Tuzish </button>
+       <button class="tg-btn" onclick="openTg()">Telegram Sozlamalari</button>
+    <button class="sms-btn" onclick="openSms()">Eskiz SMS Sozlamalari</button>
+  </div>
+</div>
+
+<div class="full">
+  <h3>3. Mijozni Qidirish va Asosiy Qarzdan To'lovni O'chirish</h3>
+  <input class="search" id="qidiruv" onkeyup="chiqar()" placeholder="Mijoz ismini yoki telefonini yozing...">
+  <div id="royxat"></div>
+</div>
+
+<div class="modal" id="tgModal">
+  <div class="mbox">
+    <h3>Telegram Bot Sozlamalari</h3>
+    <label>Bot Token (@BotFather dan):</label>
+    <input id="tgToken" placeholder="7123456789:AAF...">
+    <label>Do'kon egasi Chat ID:</label>
+    <input id="tgChatId" placeholder="987654321">
+    <button class="btn bgreen" onclick="saveTg()">Saqlash va Test Yuborish</button>
+    <button class="btn" style="background:#475569;" onclick="closeTg()">Yopish</button>
+  </div>
+</div>
+
+<div class="modal" id="smsModal">
+  <div class="mbox">
+    <h3>Eskiz.uz Oddiy SMS Sozlamalari</h3>
+    <p style="font-size:12px;color:#94a3b8;margin-bottom:10px;">my.eskiz.uz kabinetidan olingan Login va Parolni kiriting.</p>
+    <label>Eskiz Email:</label>
+    <input id="eskizEmail" placeholder="dokon@gmail.com">
+    <label>Eskiz Parol (Secret Key):</label>
+    <input type="password" id="eskizPass" placeholder="Maxfiy parol">
+    <label>Jo'natuvchi nomi (Nickname):</label>
+    <input id="eskizFrom" value="4546" placeholder="4546 yoki DOKON">
+    <button class="btn bgreen" onclick="saveSms()">SMS Sozlamalarini Saqlash</button>
+    <button class="btn" style="background:#475569;" onclick="closeSms()">Yopish</button>
+  </div>
+</div>
+<script>
+function pul(n) { return Math.round(n).toLocaleString("ru-RU") + " so'm"; }
+
+function hisobla() {
+  var narx = Number(document.getElementById("narx").value) || 0;
+  var bosh = Number(document.getElementById("bosh").value) || 0;
+  var oy = Number(document.getElementById("oy").value) || 1;
+  var foiz = Number(document.getElementById("foiz").value) || 0;
+  var qarz = narx > bosh ? narx - bosh : 0;
+  var ustama = qarz * (foiz / 100) * (oy / 12);
+  var jamiQarz = Math.round(qarz + ustama);
+  var oylik = Math.round(jamiQarz / oy);
+  var jami = bosh + jamiQarz;
+
+  document.getElementById("oylik_txt").innerText = pul(oylik);
+  document.getElementById("narx_txt").innerText = pul(narx);
+  document.getElementById("bosh_txt").innerText = pul(bosh);
+  document.getElementById("qarz_txt").innerText = pul(qarz);
+  document.getElementById("ustama_txt").innerText = pul(ustama);
+  document.getElementById("jami_txt").innerText = pul(jami);
+  return { narx: narx, bosh: bosh, oy: oy, oylik: oylik, jamiQarz: jamiQarz, jami: jami };
+}
+
+function sendTelegram(text, extraId, isTest) {
+  var token = localStorage.getItem("crm_tg_token") || "";
+  var adminChat = localStorage.getItem("crm_tg_chat") || "";
+  if (!token || !adminChat) return;
+  var targets = [adminChat];
+  if (extraId && extraId !== adminChat) targets.push(extraId);
+  var host = "api." + "telegram" + ".org/bot";
+
+  for (var i = 0; i < targets.length; i++) {
+    fetch("https://" + host + token + "/sendMessage", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: targets[i], text: text, parse_mode: "HTML" })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (isTest && d.ok) alert("Telegram bot ulandi!");
+    }).catch(function() {});
+  }
+}
+
+function sendEskizSms(phone, smsText) {
+  var email = localStorage.getItem("eskiz_email") || "";
+  var pass = localStorage.getItem("eskiz_pass") || "";
+  var fromName = localStorage.getItem("eskiz_from") || "4546";
+  var cleanPhone = phone.replace(/\D/g, "");
+  if (!email || !pass || cleanPhone.length < 9) return;
+  if (cleanPhone.length === 9) cleanPhone = "998" + cleanPhone;
+
+  var eskizHost = "notify." + "eskiz" + ".uz/api";
+  var fd = new FormData();
+  fd.append("email", email);
+  fd.append("password", pass);
+
+  fetch("https://" + eskizHost + "/auth/login", { method: "POST", body: fd })
+  .then(function(r) { return r.json(); })
+  .then(function(auth) {
+    if (auth.data && auth.data.token) {
+      var smsFd = new FormData();
+      smsFd.append("mobile_phone", cleanPhone);
+      smsFd.append("message", smsText);
+      smsFd.append("from", fromName);
+      fetch("https://" + eskizHost + "/message/sms/send", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + auth.data.token },
+        body: smsFd
+      });
+    }
+  }).catch(function() {});
+}
+
+function saqlash() {
+  var ism = document.getElementById("ism").value.trim();
+  if (!ism) return alert("Mijoz F.I.Sh kiriting!");
+  var h = hisobla();
+  var manzil = document.getElementById("manzil").value || "-";
+  var tel = document.getElementById("tel").value || "-";
+  var pasport = document.getElementById("pasport").value || "-";
+  var tovar = document.getElementById("tovar").value || "Mahsulot";
+  var mijozTg = document.getElementById("mijozTg").value.trim();
+
+  var db = JSON.parse(localStorage.getItem("techpro_db") || "[]");
+  db.unshift({ id: Date.now(), ism: ism, manzil: manzil, tel: tel, pasport: pasport, tovar: tovar, mijozTg: mijozTg, jamiQarz: h.jamiQarz, qolganQarz: h.jamiQarz, oylik: h.oylik, jamiOy: h.oy, tolovlar: [] });
+  localStorage.setItem("techpro_db", JSON.stringify(db));
+
+  var tgMsg = "<b>YANGI SHARTNOMA</b>\nMijoz: " + ism + "\nTel: " + tel + "\nMahsulot: " + tovar + "\nOylik: " + pul(h.oylik) + "\nJami qarz: " + pul(h.jamiQarz);
+  var smsMsg = "Hurmatli " + ism + "! Siz " + tovar + " mahsulotini " + h.oy + " oyga muddatli tolovga oldingiz. Oylik tolov: " + pul(h.oylik) + ". Jami qarz: " + pul(h.jamiQarz);
+
+  sendTelegram(tgMsg, mijozTg, false);
+  sendEskizSms(tel, smsMsg);
+  chiqar();
+  alert("Saqlandi! Telegram va SMS yuborildi.");
+}
+
+function tolovOchir(id) {
+  var summa = Number(document.getElementById("sum_" + id).value) || 0;
+  if (summa <= 0) return alert("Summani kiriting!");
+  var db = JSON.parse(localStorage.getItem("techpro_db") || "[]");
+  for (var i = 0; i < db.length; i++) {
+    if (db[i].id === id) {
+      if (summa > db[i].qolganQarz) summa = db[i].qolganQarz;
+      db[i].qolganQarz -= summa;
+      db[i].tolovlar.push({ sana: new Date().toLocaleDateString("uz-UZ"), summa: summa });
+
+      var tgMsg = "<b>TO'LOV QABUL QILINDI</b>\nMijoz: " + db[i].ism + "\nTo'landi: " + pul(summa) + "\nQolgan qarz: " + pul(db[i].qolganQarz);
+      var smsMsg = "Hurmatli " + db[i].ism + "! " + pul(summa) + " tolovingiz qabul qilindi. Qolgan qarzingiz: " + pul(db[i].qolganQarz);
+      sendTelegram(tgMsg, db[i].mijozTg, false);
+      sendEskizSms(db[i].tel, smsMsg);
+      break;
+    }
+  }
+  localStorage.setItem("techpro_db", JSON.stringify(db));
+  chiqar();
+}
+
+function mijozOchir(id) {
+  if (!confirm("O'chirasizmi?")) return;
+  var db = JSON.parse(localStorage.getItem("techpro_db") || "[]").filter(function(x) { return x.id !== id; });
+  localStorage.setItem("techpro_db", JSON.stringify(db));
+  chiqar();
+}
+
+function chiqar() {
+  var q = document.getElementById("qidiruv").value.toLowerCase();
+  var db = JSON.parse(localStorage.getItem("techpro_db") || "[]");
+  var html = "", totDebt = 0, totPaid = 0;
+
+  for (var i = 0; i < db.length; i++) {
+    var m = db[i];
+    totDebt += m.qolganQarz;
+    totPaid += (m.jamiQarz - m.qolganQarz);
+    if (m.ism.toLowerCase().indexOf(q) === -1 && m.tel.indexOf(q) === -1) continue;
+
+    var tarix = "";
+    for (var j = 0; j < m.tolovlar.length; j++) tarix += (j + 1) + ") " + pul(m.tolovlar[j].summa) + " (" + m.tolovlar[j].sana + ") | ";
+
+    html += "<div class='citem'><div class='chead'><div><b style='color:#38bdf8;font-size:16px;'>" + m.ism + "</b><br><small style='color:#94a3b8;'>Manzil: " + m.manzil + " | Tel: " + m.tel + " | Pasport: " + m.pasport + "</small></div>";
+    html += "<div style='text-align:right;'><b>" + m.tovar + "</b><br><small style='color:#94a3b8;'>Oylik: " + pul(m.oylik) + " (" + m.jamiOy + " oy)</small></div></div>";
+    html += "<div style='display:flex;gap:18px;flex-wrap:wrap;font-size:14px;'><div>Jami: <b>" + pul(m.jamiQarz) + "</b></div><div style='color:#34d399;'>To'landi (" + m.tolovlar.length + " marta): <b>" + pul(m.jamiQarz - m.qolganQarz) + "</b></div><div style='color:#f87171;'>Qolgan qarz: <b>" + pul(m.qolganQarz) + "</b></div></div>";
+
+    if (m.qolganQarz > 0) {
+      html += "<div class='cact'><input type='number' id='sum_" + m.id + "' value='" + m.oylik + "'><button class='btn bgreen bsm' onclick='tolovOchir(" + m.id + ")'>Asosiy qarzdan o'chirish (-)</button><button class='btn bsm' style='background:#dc2626;' onclick='mijozOchir(" + m.id + ")'>X</button></div>";
+    } else {
+      html += "<div class='cact'><b style='color:#34d399;'>QARZ TO'LIQ YOPILGAN!</b> <button class='btn bsm' style='background:#dc2626;' onclick='mijozOchir(" + m.id + ")'>X</button></div>";
+    }
+    html += "<div class='hist'><b>Tarix:</b> " + (tarix || "Hali to'lov yo'q") + "</div></div>";
+  }
+
+  document.getElementById("stCount").innerText = db.length + " ta";
+  document.getElementById("stDebt").innerText = pul(totDebt);
+  document.getElementById("stPaid").innerText = pul(totPaid);
+  document.getElementById("royxat").innerHTML = html || "<p style='text-align:center;color:#64748b;'>Mijoz topilmadi</p>";
+}
+
+function openTg() {
+  document.getElementById("tgToken").value = localStorage.getItem("crm_tg_token") || "";
+  document.getElementById("tgChatId").value = localStorage.getItem("crm_tg_chat") || "";
+  document.getElementById("tgModal").classList.add("open");
+}
+function closeTg() { document.getElementById("tgModal").classList.remove("open"); }
+function saveTg() {
+  localStorage.setItem("crm_tg_token", document.getElementById("tgToken").value.trim());
+  localStorage.setItem("crm_tg_chat", document.getElementById("tgChatId").value.trim());
+  closeTg();
+  sendTelegram("<b>TECHPRO CRM:</b> Telegram bot ulandi!", "", true);
+}
+
+function openSms() {
+  document.getElementById("eskizEmail").value = localStorage.getItem("eskiz_email") || "";
+  document.getElementById("eskizPass").value = localStorage.getItem("eskiz_pass") || "";
+  document.getElementById("eskizFrom").value = localStorage.getItem("eskiz_from") || "4546";
+  document.getElementById("smsModal").classList.add("open");
+}
+function closeSms() { document.getElementById("smsModal").classList.remove("open"); }
+function saveSms() {
+  localStorage.setItem("eskiz_email", document.getElementById("eskizEmail").value.trim());
+  localStorage.setItem("eskiz_pass", document.getElementById("eskizPass").value.trim());
+  localStorage.setItem("eskiz_from", document.getElementById("eskizFrom").value.trim());
+  closeSms();
+  alert("Eskiz.uz SMS sozlamalari saqlandi!");
+}
+
+function wordYukla() {
+  var h = hisobla();
+  var ism = document.getElementById("ism").value || "_____________________";
+  var manzil = document.getElementById("manzil").value || "_____________________";
+  var tel = document.getElementById("tel").value || "______________";
+  var pasport = document.getElementById("pasport").value || "__________";
+  var tovar = document.getElementById("tovar").value || "_____________________";
+  var bugun = new Date();
+  var jadval = "";
+  for (var i = 1; i <= h.oy; i++) {
+    var sana = new Date(bugun.getFullYear(), bugun.getMonth() + i, bugun.getDate()).toLocaleDateString("uz-UZ");
+      jadval += "<tr><td style='border:1px solid #333;padding:5px;text-align:center;'>" + i + "</td><td style='border:1px solid #333;padding:5px;text-align:center;'>" + sana + "</td><td style='border:1px solid #333;padding:5px;text-align:right;'><b>" + pul(h.oylik) + "</b></td><td style='border:1px solid #333;padding:5px;'></td></tr>";
+  }
+  var doc = "<meta charset='utf-8'><div style='font-family:Times New Roman;padding:15px;border:2px solid #0284c7;'><div style='background:#0284c7;color:#fff;padding:10px;text-align:center;'><h2>MUDDATLI TO'LOV SHARTNOMASI</h2><p>Sana: " + bugun.toLocaleDateString("uz-UZ") + "</p></div><table style='width:100%;border-collapse:collapse;margin-top:12px;'><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Xaridor:</b></td><td style='border:1px solid #333;padding:6px;'>" + ism + "</td></tr><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Manzil:</b></td><td style='border:1px solid #333;padding:6px;'>" + manzil + "</td></tr><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Pasport / Tel:</b></td><td style='border:1px solid #333;padding:6px;'>" + pasport + " | " + tel + "</td></tr><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Mahsulot:</b></td><td style='border:1px solid #333;padding:6px;'><b>" + tovar + "</b></td></tr><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Narxi / Boshlang'ich:</b></td><td style='border:1px solid #333;padding:6px;'>" + pul(h.narx) + " / " + pul(h.bosh) + "</td></tr><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Muddat / Oylik:</b></td><td style='border:1px solid #333;padding:6px;'><b>" + h.oy + " oy</b> | <b>" + pul(h.oylik) + "</b></td></tr><tr><td style='border:1px solid #333;padding:6px;background:#f1f5f9;'><b>Jami summa:</b></td><td style='border:1px solid #333;padding:6px;color:green;'><b>" + pul(h.jami) + "</b></td></tr></table><h3 style='color:#0284c7;margin-top:12px;'>TO'LOVLAR JADVALI</h3><table style='width:100%;border-collapse:collapse;'><tr style='background:#0284c7;color:#fff;'><th style='border:1px solid #333;'>Oy</th><th style='border:1px solid #333;'>Sana</th><th style='border:1px solid #333;'>Summa</th><th style='border:1px solid #333;'>Imzo</th></tr>" + jadval + "</table><p style='margin-top:25px;'><b>SOTUVCHI:</b> _______________ &nbsp;&nbsp;&nbsp;&nbsp; <b>XARIDOR:</b> _______________ (" + ism + ")</p></div>";
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\ufeff", doc], { type: "application/msword" }));
+  a.download = "Shartnoma.doc";
+  a.click();
+}
+
+hisobla();
+chiqar();
+</script>
+</body>
+</html>
